@@ -17,6 +17,10 @@ let meshdiana;
 let meshmonkey;
 let meshamongus;
 
+let meshx;
+let meshy;
+let meshz;
+
 
 window.onload = function() {
     gl.enable(gl.DEPTH_TEST);
@@ -25,25 +29,27 @@ window.onload = function() {
     gl.cullFace(gl.BACK);
 
     let jsondiana = {
+        "id":1,
         "rotationMatirx":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        "rotate":0,
         "camera":{
             "x":5,
             "y":5,
-            "z":-15
+            "z":15
         },
         "trans":{
-            "x":-0.5,
+            "x":0,
+            "y":0,
+            "z":0
+        },
+        "scale":{
+            "x":0.5,
             "y":0.5,
             "z":0.5
         },
-        "scale":{
-            "x":1,
-            "y":1,
-            "z":1
-        },
         
         "objcolor":{
-            "x":0,
+            "x":1,
             "y":1,
             "z":0
         },
@@ -64,8 +70,8 @@ window.onload = function() {
         },
         "coff":{
             "ka":1,
-            "ks":1,
-            "kd":1
+            "ks":0,
+            "kd":0
         },
         "shininess":150,
         "phong":false
@@ -73,6 +79,7 @@ window.onload = function() {
     };
 
     let jsonmonkey = {
+        "id":2,
 
         "camera":{
             "x":5,
@@ -80,9 +87,107 @@ window.onload = function() {
             "z":-15
         },
         "trans":{
-            "x":0.8,
-            "y":-0.5,
-            "z":-0.5
+            "x":0,
+            "y":0,
+            "z":0
+        },
+        "scale":{
+            "x":0.3,
+            "y":0.3,
+            "z":0.3
+        },
+        "objcolor":{
+            "x":1,
+            "y":0,
+            "z":1
+        },
+        "lightcolor":{
+            "x":1,
+            "y":1,
+            "z":1
+        },
+        "speccolor":{
+            "x":1,
+            "y":1,
+            "z":1
+        },
+        "lightpos":{
+            "x":20,
+            "y":0,
+            "z":-50
+        },
+        "coff":{
+            "ka":1,
+            "ks":0,
+            "kd":0
+        },
+        "rotate":0,
+
+        "shininess":300,
+        "phong":false
+    };
+    let jsonamongus = {
+        "id":3,
+        "rotate":0,
+
+        "camera":{
+            "x":5,
+            "y":5,
+            "z":-15
+        },
+        "trans":{
+            "x":0,
+            "y":0,
+            "z":0
+        },
+        "scale":{
+            "x":0.5,
+            "y":0.5,
+            "z":0.5
+        },
+        
+        "objcolor":{
+            "x":0,
+            "y":1,
+            "z":1
+        },
+        "lightcolor":{
+            "x":1,
+            "y":1,
+            "z":1
+        },
+        "speccolor":{
+            "x":1,
+            "y":1,
+            "z":1
+        },
+        "lightpos":{
+            "x":20,
+            "y":10,
+            "z":-50
+        },
+        "coff":{
+            "ka":1,
+            "ks":0,
+            "kd":0
+        },
+        "shininess":128,
+        "phong":false
+    };
+
+
+
+    let json_xaxis = {
+        "rotationMatirx":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        "camera":{
+            "x":0,
+            "y":0,
+            "z":15
+        },
+        "trans":{
+            "x":0,
+            "y":0,
+            "z":0
         },
         "scale":{
             "x":1,
@@ -106,30 +211,78 @@ window.onload = function() {
             "z":1
         },
         "lightpos":{
+            "x":-20,
+            "y":10,
+            "z":-50
+        },
+        "coff":{
+            "ka":1,
+            "ks":0,
+            "kd":0
+        },
+        "shininess":150,
+        "phong":false
+        
+    };
+
+    let json_yaxis = {
+
+        "camera":{
+            "x":0,
+            "y":0,
+            "z":15
+        },
+        "trans":{
+            "x":0,
+            "y":0,
+            "z":0
+        },
+        "scale":{
+            "x":1,
+            "y":1,
+            "z":1
+        },
+        
+        "objcolor":{
+            "x":0,
+            "y":1,
+            "z":0
+        },
+        "lightcolor":{
+            "x":1,
+            "y":1,
+            "z":1
+        },
+        "speccolor":{
+            "x":1,
+            "y":1,
+            "z":1
+        },
+        "lightpos":{
             "x":20,
             "y":0,
             "z":-50
         },
         "coff":{
             "ka":1,
-            "ks":1,
-            "kd":1
+            "ks":0,
+            "kd":0
         },
 
         "shininess":300,
         "phong":false
     };
-    let jsonamongus = {
+    let json_zaxis = {
 
         "camera":{
-            "x":5,
+            "x":-5,
             "y":5,
-            "z":-15
+            "z":-12
         },
         "trans":{
-            "x":0.9,
-            "y":0.5,
-            "z":0.5
+            "x":0,
+            "y":0,
+            "z":0
         },
         "scale":{
             "x":1,
@@ -159,8 +312,8 @@ window.onload = function() {
         },
         "coff":{
             "ka":1,
-            "ks":1,
-            "kd":1
+            "ks":0,
+            "kd":0
         },
         "shininess":128,
         "phong":false
@@ -183,329 +336,88 @@ window.onload = function() {
                     document.getElementById("p1").innerHTML = " mesh-transformation mode is <b>Active</b> ";
                 }
                 break;
-            case "s":
-                console.log("s is pressed");
-                shading = (shading+1)%2;
-                if(shading==0){
-                    if(currsel==3){
-                        jsonmonkey.phong=false;
-                        document.getElementById("p3").innerHTML = "shading-model-choice mode - <b>Gourand</b>";
-                    }
-                    if(currsel==4){
-                        jsondiana.phong=false;
-                        document.getElementById("p3").innerHTML = "shading-model-choice mode - <b>Gourand</b>";
-                    }
-                    if(currsel==5){
-                        jsonamongus.phong=false;
-                        document.getElementById("p3").innerHTML = "shading-model-choice mode - <b>Gourand</b>";
-                    }
-                    drawAll(jsondiana,jsonmonkey,jsonamongus);
-                    
-                }
-                else{
-                    
-                    if(currsel==3){
-                        jsonmonkey.phong=true;
-                        document.getElementById("p3").innerHTML = " shading-model-choice mode - <b>Phong</b> ";
-                    }
-                    if(currsel==4){
-                        jsondiana.phong=true;
-                        document.getElementById("p3").innerHTML = " shading-model-choice mode - <b>Phong</b> ";
-                    }
-                    if(currsel==5){
-                        jsonamongus.phong=true;
-                        document.getElementById("p3").innerHTML = " shading-model-choice mode - <b>Phong</b> ";
-                    }
-                    drawAll(jsondiana,jsonmonkey,jsonamongus);
-                }
-                break;
-            case "i":
-            console.log("i is pressed");
-            illu = (illu+1)%2;
-            if(illu==0){
-                if(currsel==3){
-                    jsonmonkey.illu=false;
-                document.getElementById("p6").innerHTML = "illuumination Mode - <b>ON</b>";
-                }
-                if(currsel==4){
-                    jsondiana.illu=false;
-                    document.getElementById("p6").innerHTML = "illuumination Mode - <b>ON</b>";
-                }
-                if(currsel==5){
-                    jsonamongus.illu=false;
-                    document.getElementById("p6").innerHTML = "illuumination Mode - <b>ON</b>";
-                }
-                drawAll(jsondiana,jsonmonkey,jsonamongus);
-                
-            }
-            else{
-                
-                if(currsel==3){
-                    jsonmonkey.illu=true;
-                    document.getElementById("p6").innerHTML = " illuumination Mode - <b>OFF</b> ";
-                }
-                if(currsel==4){
-                    jsondiana.illu=true;
-                    document.getElementById("p6").innerHTML = " illuumination Mode - <b>OFF</b> ";
-                }
-                if(currsel==5){
-                    jsonamongus.illu=true;
-                    document.getElementById("p6").innerHTML = " illuumination Mode - <b>OFF</b>  ";
-                }
-                drawAll(jsondiana,jsonmonkey,jsonamongus);
-            }
-            break;
-            case "+":
-                if(mode==1) {
-                    //scale(currentSel,0.1);
-                    if(currsel==3){
-                        jsonmonkey.scale.x += 0.1;
-                        jsonmonkey.scale.y += 0.1;
-                        jsonmonkey.scale.z += 0.1;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                        
-
-                    }
-                    if(currsel==4){
-                    jsondiana.scale.x += 0.1;
-                    jsondiana.scale.y += 0.1;
-                    jsondiana.scale.z += 0.1;
-                    drawAll(jsondiana,jsonmonkey,jsonamongus);  
-
-                    }
-                    if(currsel==5){
-                        jsonamongus.scale.x += 0.1;
-                        jsonamongus.scale.y += 0.1;
-                        jsonamongus.scale.z += 0.1;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                    }
-                    
-                      
-                }
-                break;
-               
-            case "a":
-                if(mode==1) {
-                    //scale(currentSel,0.1);
-                    if(currsel==3){
-                        jsonmonkey.trans.x += 0.1;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                        
-
-                    }
-                    if(currsel==4){
-                    jsondiana.trans.x += 0.1;
-                    drawAll(jsondiana,jsonmonkey,jsonamongus);  
-
-                    }
-                    if(currsel==5){
-                        jsonamongus.trans.x += 0.1;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                    }
-                    
-                      
-                }
-
-                break;
             case "d":
-                if(mode==1) {
-                    if(currsel==3){
-                        jsonmonkey.trans.x -= 0.1;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                        
-    
-                    }
-                    if(currsel==4){
-                    jsondiana.trans.x -= 0.1;
-                    drawAll(jsondiana,jsonmonkey,jsonamongus);  
-    
-                    }
-                    if(currsel==5){
-                        jsonamongus.trans.x -= 0.1;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                    }
-                    
-                }
-                break;
-            case "x":
-                if(mode==1) {
-                    if(currsel==3){
-                        jsonmonkey.trans.y -= 0.1;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                        
-    
-                    }
-                    if(currsel==4){
-                    jsondiana.trans.y -= 0.1;
-                    drawAll(jsondiana,jsonmonkey,jsonamongus);  
-    
-                    }
-                    if(currsel==5){
-                        jsonamongus.trans.y -= 0.1;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                    }
-                    
-                }
-                break;
-            case "w":
-                if(mode==1) {
-                    //scale(currentSel,0.1);
-                    if(currsel==3){
-                        jsonmonkey.trans.y += 0.1;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                        
+                jsondiana.scale.x = 0.5;
+                jsondiana.scale.y = 0.5;
+                jsondiana.scale.z = 0.5;
 
-                    }
-                    if(currsel==4){
-                    jsondiana.trans.y += 0.1;
-                    drawAll(jsondiana,jsonmonkey,jsonamongus);  
+                jsonmonkey.scale.x = 0.3;
+                jsonmonkey.scale.y = 0.3;
+                jsonmonkey.scale.z = 0.3;
 
-                    }
-                    if(currsel==5){
-                        jsonamongus.trans.y += 0.1;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                    }
-                    
-                      
-                }
+                jsonamongus.scale.x = 0.5;
+                jsonamongus.scale.y = 0.5;
+                jsonamongus.scale.z = 0.5;
+
+
+
+                jsondiana.trans.y=0.6
+                jsondiana.trans.x=0
+                jsondiana.trans.z=0
+
+
+                jsonmonkey.trans.x=-0.86;
+                jsonmonkey.trans.y = 0;
+                jsonmonkey.trans.z = 0;
+
+                jsonamongus.trans.x = 0.5;
+                jsonamongus.trans.y = -0.86
+
+                drawAll(jsondiana,jsonmonkey,jsonamongus,json_xaxis,json_yaxis,json_zaxis);
+                break;
+            case "e":
+                jsondiana.scale.x = 0.5;
+                jsondiana.scale.y = 0.5;
+                jsondiana.scale.z = 0.5;
+
+                jsonmonkey.scale.x = 0.3;
+                jsonmonkey.scale.y = 0.3;
+                jsonmonkey.scale.z = 0.3;
+
+                jsonamongus.scale.x = 0.5;
+                jsonamongus.scale.y = 0.5;
+                jsonamongus.scale.z = 0.5;
+
+                jsondiana.trans.x=0.5
+                jsondiana.trans.y=0.3
+                jsondiana.trans.z=0
+
+                jsonmonkey.trans.x=-0.4
+                jsonmonkey.trans.y = -0.5
+                jsondiana.trans.z=0
+
+                jsonamongus.trans.x = 0.5;
+                jsonamongus.trans.y = 0.1
+
+                drawAll(jsondiana,jsonmonkey,jsonamongus,json_xaxis,json_yaxis,json_zaxis);
                 break;
 
-            case "-":
-            if(mode==1) {
-                if(currsel==3){
-                    jsonmonkey.scale.x -= 0.1;
-                    jsonmonkey.scale.y -= 0.1;
-                    jsonmonkey.scale.z -= 0.1;
-                    drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                    
+            case "g":
 
-                }
-                if(currsel==4){
-                jsondiana.scale.x -= 0.1;
-                jsondiana.scale.y -= 0.1;
-                jsondiana.scale.z -= 0.1;
-                drawAll(jsondiana,jsonmonkey,jsonamongus);  
+                jsondiana.scale.x = jsondiana.scale.x*0.5;
+                jsondiana.scale.y = jsondiana.scale.y*0.5;
+                jsondiana.scale.z = jsondiana.scale.z*0.5;
 
-                }
-                if(currsel==5){
-                    jsonamongus.scale.x -= 0.1;
-                    jsonamongus.scale.y -= 0.1;
-                    jsonamongus.scale.z -= 0.1;
-                    drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                }
+                jsonmonkey.scale.x = jsonmonkey.scale.x*2;
+                jsonmonkey.scale.y = jsonmonkey.scale.y*2;
+                jsonmonkey.scale.z = jsonmonkey.scale.z*2;
+
+                jsonamongus.scale.x = jsonamongus.scale.x*3;
+                jsonamongus.scale.y = jsonamongus.scale.y*3;
+                jsonamongus.scale.z = jsonamongus.scale.z*3;
+
+                drawAll(jsondiana,jsonmonkey,jsonamongus,json_xaxis,json_yaxis,json_zaxis);
+                break;
                 
-            }
-            break;
-            case "2":
-                currsel=2;
-                document.getElementById("p5").innerHTML = "Current mesh id is <b>2</b> (None)";
 
-                break;
-            case "3":
-                console.log("3 dabaya");
-                currsel=3;
-                document.getElementById("p5").innerHTML = "Current mesh id is <b>3</b> (Monkey)";
-                break;
-            case "4":
-                console.log("4 dabaya");
-                currsel=4;
-                document.getElementById("p5").innerHTML = "Current mesh id is <b>4</b> (Dianasour)";
-                break;
-            case "5":
-                console.log("5 dabaya");
-                currsel=5;
-                document.getElementById("p5").innerHTML = "Current mesh id is <b>5</b> (AmongUs)";
-                break;
-            case "ArrowRight":
-                console.log("Arrow pressed");
-                if(mode==1) {
-
-                    if(currsel==3){
-                        jsonmonkey.lightpos.x -= 5;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                        
-    
-                    }
-                    if(currsel==4){
-                    jsondiana.lightpos.x -= 5;
-                    drawAll(jsondiana,jsonmonkey,jsonamongus);  
-    
-                    }
-                    if(currsel==5){
-                        jsonamongus.lightpos.x -= 5;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                    }
-                    
-                }
-                break;
-                case "ArrowLeft":
-                    console.log("Arrow pressed");
-                    if(mode==1) {
-    
-                        if(currsel==3){
-                            jsonmonkey.lightpos.x += 5;
-                            drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                            
-        
-                        }
-                        if(currsel==4){
-                        jsondiana.lightpos.x += 5;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus);  
-        
-                        }
-                        if(currsel==5){
-                            jsonamongus.lightpos.x += 5;
-                            drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                        }
-                        
-                    }
-                    break;
-                case "ArrowUp":
-                    console.log("Arrow pressed");
-                    if(mode==1) {
-    
-                        if(currsel==3){
-                            jsonmonkey.lightpos.y += 5;
-                            drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                            
-        
-                        }
-                        if(currsel==4){
-                        jsondiana.lightpos.y += 5;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus);  
-        
-                        }
-                        if(currsel==5){
-                            jsonamongus.lightpos.y += 5;
-                            drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                        }
-                        
-                    }
-                    break;
-                case "ArrowDown":
-                    console.log("Arrow pressed");
-                    if(mode==1) {
-    
-                        if(currsel==3){
-                            jsonmonkey.lightpos.y -= 5;
-                            drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                            
-        
-                        }
-                        if(currsel==4){
-                        jsondiana.lightpos.y -= 5;
-                        drawAll(jsondiana,jsonmonkey,jsonamongus);  
-        
-                        }
-                        if(currsel==5){
-                            jsonamongus.lightpos.y -= 5;
-                            drawAll(jsondiana,jsonmonkey,jsonamongus); 
-                        }
-                        
-                    }
-                    break;
-                
+            case "f":
+                jsondiana.rotate += Math.PI/2;
+                jsonmonkey.rotate += Math.PI/2;
+                jsonamongus.rotate += Math.PI/2;
+                drawAll(jsondiana,jsonmonkey,jsonamongus,json_xaxis,json_yaxis,json_zaxis);
             
+            break;
+           
 
                 default:
                 console.log("kuch bhi");
@@ -516,33 +428,27 @@ window.onload = function() {
 
     Trackball.RotationWithQuaternion.onRotationChanged = function (updatedRotationMatrix) {
         //console.log("trackball wala "+updatedRotationMatrix);
-        if(mode==1){
-            if(currsel==3){
-                console.log("3 update hua");
-                jsonmonkey.rotationMatrix  = updatedRotationMatrix;
-                jsondiana.rotationMatrix=undefined;
-                jsonamongus.rotationMatrix=undefined;
-                drawAll(jsondiana,jsonmonkey,jsonamongus);
-            }
-            else if(currsel==4){
-                console.log("4 update hua");
-                jsondiana.rotationMatrix  = updatedRotationMatrix;
-                jsonmonkey.rotationMatrix=undefined;
-                jsonamongus.rotationMatrix=undefined;
-                drawAll(jsondiana,jsonmonkey,jsonamongus);
-            }
-            else if(currsel==5){
-                console.log("5 update hua");
-                jsonamongus.rotationMatrix  = updatedRotationMatrix;
-                jsondiana.rotationMatrix=undefined;
-                jsonmonkey.rotationMatrix=undefined;
-                drawAll(jsondiana,jsonmonkey,jsonamongus);
 
-            }
+        if(mode==1){
+        jsonmonkey.rotationMatrix  = updatedRotationMatrix;
+        jsondiana.rotationMatrix  = updatedRotationMatrix;
+        jsonamongus.rotationMatrix  = updatedRotationMatrix;
+        json_xaxis.rotationMatrix  = updatedRotationMatrix;
+        json_yaxis.rotationMatrix  = undefined;
+        json_zaxis.rotationMatrix  = undefined;
+        
+
+
+
+        drawAll(jsondiana,jsonmonkey,jsonamongus,json_xaxis,json_yaxis,json_zaxis);
         }
+    
+       
         
 
     }
+
+
     
 
 
@@ -556,9 +462,20 @@ window.onload = function() {
     var objStr7 = document.getElementById('amongus.obj').innerHTML;
     meshamongus = new OBJ.Mesh(objStr7);
 
+
+    var objStr1 = document.getElementById('blender.obj').innerHTML;
+    meshy= new OBJ.Mesh(objStr1);
+   // console.log(meshmonkey);
+
+    var objStr2 = document.getElementById('xaxis.obj').innerHTML;
+    meshx= new OBJ.Mesh(objStr2);
+
+    var objStr3 = document.getElementById('zaxis.obj').innerHTML;
+    meshz = new OBJ.Mesh(objStr3);
+
    renderer.clear();
 
-    drawAll(jsondiana,jsonmonkey,jsonamongus);
+    drawAll(jsondiana,jsonmonkey,jsonamongus,json_xaxis,json_yaxis,json_zaxis);
 
    
     
@@ -572,12 +489,18 @@ if (!gl) {
     throw new Error('WebGL not supported');
 }
 
-function drawAll(jsondiana,jsonmonkey,jsonamongus){
+function drawAll(jsondiana,jsonmonkey,jsonamongus,json_xaxis,json_yaxis,json_zaxis){
     gl.clearColor(0.75, 0.85, 0.8, 1.0);
     gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
+   
     draw(meshdiana,jsondiana);
     draw(meshmonkey,jsonmonkey);
     draw(meshamongus,jsonamongus);
+
+    draw(meshx,json_xaxis);
+    draw(meshy,json_yaxis);
+    draw(meshz,json_zaxis);
+    
 }
 
 
@@ -910,11 +833,23 @@ else{
     if(jsondiana.rotationMatrix!=undefined){
     mat4.mul(worldMatrix,worldMatrix,jsondiana.rotationMatrix);
     }
+    if(jsondiana.id==1){
+
+        mat4.rotate(worldMatrix,worldMatrix,jsondiana.rotate,[0,1,0]);
+
+    }
+    if(jsondiana.id==2){
+        mat4.rotate(worldMatrix,worldMatrix,jsondiana.rotate,[1,0,0]);
+    }
+    if(jsondiana.id==3){
+        mat4.rotate(worldMatrix,worldMatrix,jsondiana.rotate,[0,0,1]);
+    }
         
 
     
     
     mat4.lookAt(viewMatrix, camera, [0, 0, 0], [0, 1, 0]); //out,eye,centre,up
+    
     mat4.perspective(projMatrix, Math.PI/8, renderer.getCleintVal(), 0.1, 1000.0); //out, fovy, aspect, near, far
     
     gl.uniformMatrix4fv(matWorldUniformLocation, gl.FALSE, worldMatrix);
